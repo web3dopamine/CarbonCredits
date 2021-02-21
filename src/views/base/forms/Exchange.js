@@ -32,7 +32,6 @@ import {
   CSwitch
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { DocsLink } from 'src/reusable'
 
 const BasicForms = () => {
   const [collapsed, setCollapsed] = React.useState(true)
@@ -46,7 +45,7 @@ const BasicForms = () => {
             <CCardHeader>
               Credit Card
               <small> Form</small>
-              <DocsLink name="-Input"/>
+            
             </CCardHeader>
             <CCardBody>
               <CRow>

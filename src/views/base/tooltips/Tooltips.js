@@ -9,7 +9,6 @@ import {
   CCol,
   CLink
 } from '@coreui/react'
-import { DocsLink } from 'src/reusable'
 
 const Tooltips = () => {
   const placements = [
@@ -24,7 +23,6 @@ const Tooltips = () => {
       <CCard>
         <CCardHeader>
           Tooltips
-          <DocsLink name="CTooltip"/>
         </CCardHeader>
         <CCardBody>
           {/*eslint-disable-next-line*/}

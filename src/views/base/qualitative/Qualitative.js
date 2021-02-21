@@ -8,7 +8,7 @@ import {
   CDataTable,
   CRow
 } from '@coreui/react'
-import { DocsLink } from 'src/reusable'
+
 
 import usersData from '../../users/UsersData'
 
@@ -31,7 +31,7 @@ const Tables = () => {
         <CCol>
           <CCard>
             <CCardHeader>
-              Combined All Table
+              Qualitative Data
             </CCardHeader>
             <CCardBody>
             <CDataTable

@@ -8,7 +8,6 @@ import {
   CCardBody
 } from '@coreui/react'
 import { rgbToHex } from '@coreui/utils'
-import { DocsLink } from 'src/reusable'
 
 
 const ThemeView = () => {
@@ -54,7 +53,6 @@ const Colors = () => {
       <CCard>
         <CCardHeader>
           Theme colors
-          <DocsLink href="https://coreui.io/docs/utilities/colors/"/>
         </CCardHeader>
         <CCardBody>
           <CRow>

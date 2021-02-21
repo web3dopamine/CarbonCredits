@@ -13,7 +13,6 @@ import {
   CNavItem,
   CNavLink
 } from '@coreui/react'
-import { DocsLink } from 'src/reusable'
 
 const Navs = () => {
   return (
@@ -23,7 +22,7 @@ const Navs = () => {
           <CCard>
             <CCardHeader>
               Navs
-              <DocsLink name="CNav"/>
+            
             </CCardHeader>
             <CCardBody>
               <small>List Based</small>

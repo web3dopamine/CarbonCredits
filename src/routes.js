@@ -1,7 +1,9 @@
 import React from 'react';
 
 const Toaster = React.lazy(() => import('./views/notifications/toaster/Toaster'));
-const Tables = React.lazy(() => import('./views/base/tables/Tables'));
+const Tables = React.lazy(() => import('./views/base/tables/Tables.tsx'));
+
+const Qualitative = React.lazy(() => import('./views/base/qualitative/Qualitative'));
 
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/base/cards/Cards'));
@@ -23,12 +25,16 @@ const Switches = React.lazy(() => import('./views/base/switches/Switches'));
 
 const Tabs = React.lazy(() => import('./views/base/tabs/Tabs'));
 const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'));
-const BrandButtons = React.lazy(() => import('./views/buttons/brand-buttons/BrandButtons'));
-const ButtonDropdowns = React.lazy(() => import('./views/buttons/button-dropdowns/ButtonDropdowns'));
-const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'));
-const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'));
+//const BrandButtons = React.lazy(() => import('./views/buttons/brand-buttons/BrandButtons'));
+//const ButtonDropdowns = React.lazy(() => import('./views/buttons/button-dropdowns/ButtonDropdowns'));
+//const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'));
+//const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'));
 const Charts = React.lazy(() => import('./views/charts/Charts'));
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
+
+
+const AdminDashboard = React.lazy(() => import('./views/dashboard/AdminDashboard'));
+
 const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIcons'));
 const Flags = React.lazy(() => import('./views/icons/flags/Flags'));
 const Brands = React.lazy(() => import('./views/icons/brands/Brands'));
@@ -50,6 +56,9 @@ const routes = [
 //My code ends
   // { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+
+  { path: '/admin/dashboard', name: 'AdminDashboard', component: AdminDashboard },
+
   { path: '/theme', name: 'Theme', component: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },
@@ -72,15 +81,18 @@ const routes = [
   { path: '/base/paginations', name: 'Paginations', component: Paginations },
   { path: '/base/popovers', name: 'Popovers', component: Popovers },
   { path: '/base/progress-bar', name: 'Progress Bar', component: ProgressBar },
+ 
+  { path: '/base/qualitative', name: 'Qualitative', component: Qualitative },
+ 
   { path: '/base/switches', name: 'Switches', component: Switches },
   { path: '/base/tables', name: 'Tables', component: Tables },
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/tooltips', name: 'Tooltips', component: Tooltips },
-  { path: '/buttons', name: 'Buttons', component: Buttons, exact: true },
-  { path: '/buttons/buttons', name: 'Buttons', component: Buttons },
-  { path: '/buttons/button-dropdowns', name: 'Dropdowns', component: ButtonDropdowns },
-  { path: '/buttons/button-groups', name: 'Button Groups', component: ButtonGroups },
-  { path: '/buttons/brand-buttons', name: 'Brand Buttons', component: BrandButtons },
+  // { path: '/buttons', name: 'Buttons', component: Buttons, exact: true },
+  // { path: '/buttons/buttons', name: 'Buttons', component: Buttons },
+  // { path: '/buttons/button-dropdowns', name: 'Dropdowns', component: ButtonDropdowns },
+  // { path: '/buttons/button-groups', name: 'Button Groups', component: ButtonGroups },
+  // { path: '/buttons/brand-buttons', name: 'Brand Buttons', component: BrandButtons },
   { path: '/charts', name: 'Charts', component: Charts },
   { path: '/icons', exact: true, name: 'Icons', component: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', component: CoreUIIcons },

@@ -32,7 +32,6 @@ import {
   CSwitch
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { DocsLink } from 'src/reusable'
 
 const WidgetsDropdown = lazy(() => import('../../widgets/WidgetsWallet.js'))
 const WidgetsBrand = lazy(() => import('../../widgets/WidgetsBrand.js'))

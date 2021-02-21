@@ -20,6 +20,12 @@ const _nav =  [
     to: '/base/tables',
     icon: 'cil-calculator',
   },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Qualitative',
+    to: '/base/qualitative',
+    icon: 'cil-calculator',
+  },
   // {
   //   _tag: 'CSidebarNavItem',
   //   name: 'Exchange',

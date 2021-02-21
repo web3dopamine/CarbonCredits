@@ -13,7 +13,6 @@ import {
   CChartPie,
   CChartPolarArea
 } from '@coreui/react-chartjs'
-import { DocsLink } from 'src/reusable'
 
 const Charts = () => {
 
@@ -22,7 +21,6 @@ const Charts = () => {
       <CCard>
         <CCardHeader>
           Bar Chart
-          <DocsLink href="http://www.chartjs.org"/>
         </CCardHeader>
         <CCardBody>
           <CChartBar
