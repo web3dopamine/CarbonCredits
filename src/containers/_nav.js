@@ -24,7 +24,7 @@ const _nav =  [
     _tag: 'CSidebarNavItem',
     name: 'Qualitative',
     to: '/base/qualitative',
-    icon: 'cil-calculator',
+    icon: 'cib-graphcool',
   },
   // {
   //   _tag: 'CSidebarNavItem',
@@ -40,9 +40,21 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
+    name: 'Logs',
+    to: '/logs',
+    icon: 'cil-file',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Forecast',
+    to: '/forecast',
+    icon: 'cil-scrubber',
+  },
+  {
+    _tag: 'CSidebarNavItem',
     name: 'Wallet',
     to: '/base/wallet',
-    icon: 'cil-scrubber',
+    icon: 'cil-cash',
   },
   // {
   //   _tag: 'CSidebarNavDropdown',

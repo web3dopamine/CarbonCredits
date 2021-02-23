@@ -34,25 +34,32 @@ const Tables = () => {
               Qualitative Data
             </CCardHeader>
             <CCardBody>
-            <CDataTable
-              items={usersData}
-              fields={fields}
-              hover
-              striped
-              bordered
-              size="sm"
-              itemsPerPage={10}
-              pagination
-              scopedSlots = {{
-                'status':
-                  (item)=>(
-                    <td>
-                      <CBadge color={getBadge(item.status)}>
-                        {item.status}
-                      </CBadge>
-                    </td>
-                  )
+              <CDataTable
+                items={usersData}
+                fields={fields}
+                hover
+                striped
+                bordered
+                size="sm"
+                itemsPerPage={10}
+                pagination
+                scopedSlots={{
+                  'status':
+                    (item) => (
+                      <td>
+                        <CBadge color={getBadge(item.status)}>
+                          {item.status}
+                        </CBadge>
+                      </td>
+                    ),
+                  'project' :
+                  (item) => (
+                      <td>
+                      <a href={'avatars/sample.xlsx'} target="_blank">View Doc</a>
+                      </td>
+                      )
               }}
+              
             />
             </CCardBody>
           </CCard>

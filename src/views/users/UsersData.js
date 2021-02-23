@@ -1,4 +1,4 @@
-const url = '<a href={`#`}>View Doc</a>';
+const url = e => <a href={e.value}> {e.value} </a>;
 
 // const renderMapUrl =
 //   (val, row) =>

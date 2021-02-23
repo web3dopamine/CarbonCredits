@@ -14,7 +14,7 @@ import { Table, Input, Button, Popconfirm, Form } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 
-import './Table.css';
+import './Forecast.css';
 
 const Tables = () => {
     
@@ -43,81 +43,7 @@ const Tables = () => {
     },
   };
 
-  const DynamicFieldSet = () => {
-    const onFinish = (values:any) => {
-      console.log('Received values of form:', values);
-    };
-
-    return (
-      <Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish}>
-        <Form.List
-          name="names"
-          rules={[
-            {
-              validator: async (_, names) => {
-                if (!names || names.length < 2) {
-                  return Promise.reject(new Error('At least 2 Column Header required'));
-                }
-              },
-            },
-          ]}
-        >
-          {(fields, { add, remove }, { errors }) => (
-            <>
-              {fields.map((field, index) => (
-                <Form.Item
-                  {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                  label={index === 0 ? 'Column Header' : ''}
-                  required={false}
-                  key={field.key}
-                >
-                  <Form.Item
-                    {...field}
-                    validateTrigger={['onChange', 'onBlur']}
-                    rules={[
-                      {
-                        required: true,
-                        whitespace: true,
-                        message: "Please input Column Header or delete this field.",
-                      },
-                    ]}
-                    noStyle
-                  >
-                    <Input placeholder="Column Header" style={{ width: '60%' }} />
-                  </Form.Item>
-                  {fields.length > 1 ? (
-                    <MinusCircleOutlined
-                      className="dynamic-delete-button"
-                      onClick={() => remove(field.name)}
-                    />
-                  ) : null}
-                </Form.Item>
-              ))}
-              <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  style={{ width: '60%' }}
-                  icon={<PlusOutlined />}
-                >
-                  Add Header
-              </Button>
-               
-                <Form.ErrorList errors={errors} />
-              </Form.Item>
-            </>
-          )}
-        </Form.List>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Create Table
-        </Button>
-        </Form.Item>
-      </Form>
-    );
-  };
-
-
+  
   //Editable table
  
 
@@ -219,8 +145,10 @@ const Tables = () => {
 
   interface DataType {
     key: React.Key;
-    CarbonEmission: string;
-    timestamp: string;
+    DateLog: string;
+    Average: string;
+    Interpolated: string;
+    stdDev: string;
   }
 
   interface EditableTableState {
@@ -238,39 +166,111 @@ const Tables = () => {
 
       this.columns = [
         {
-          title: 'Carbon Emission',
-        dataIndex: 'CarbonEmission',
-          width: '30%',
-          editable: true,
+          title: 'Date',
+          dataIndex: 'DateLog',
         },
         {
-          title: 'Timestamp',
-      dataIndex: 'timestamp',
+          title: 'Average',
+          dataIndex: 'Average',
         },
         {
-          title: 'operation',
-          dataIndex: 'operation',
-          render: (_, record: { key: React.Key }) =>
-            this.state.dataSource.length >= 1 ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-                <Button type="link"><a>Delete</a></Button>
-              </Popconfirm>
-            ) : null,
+          title: 'Interpolated',
+          dataIndex: 'Interpolated',
         },
+        {
+          title: 'std Dev',
+          dataIndex: 'stdDev',
+        },
+
+        
       ];
 
       this.state = {
         dataSource: [
           {
             key: '0',
-            CarbonEmission: '120',
-            timestamp: '32',
+            DateLog: '1/1/2021',
+            Average: '413.61 ppm',
+            Interpolated: '413.34 ppm',
+            stdDev: '0.26',
           },
           {
             key: '1',
-        CarbonEmission: '120',
-        timestamp: '32',
+            DateLog: '1/2/2021',
+            Average: '414.74 ppm',
+            Interpolated: '413.48 ppm',
+            stdDev: '0.25',
           },
+          {
+            key: '2',
+            DateLog: '1/3/2021',
+            Average: '416.45 ppm',
+            Interpolated: '413.25 ppm',
+            stdDev: '0.12',
+          },
+          {
+            key: '3',
+            DateLog: '1/4/2021',
+            Average: '417.31 ppm',
+            Interpolated: '414.99 ppm',
+            stdDev: '0.24',
+          },
+          {
+            key: '4',
+            DateLog: '1/5/2021',
+            Average: '416.62 ppm',
+            Interpolated: '414.69 ppm',
+            stdDev: '0.23',
+          },
+          {
+            key: '5',
+            DateLog: '1/6/2021',
+            Average: '414.61 ppm',
+            Interpolated: '415.14 ppm',
+            stdDev: '0.16',
+          },
+          {
+            key: '6',
+            DateLog: '1/7/2021',
+            Average: '412.78 ppm',
+            Interpolated: '414.92 ppm',
+            stdDev: '0.2',
+          },
+          {
+            key: '7',
+            DateLog: '1/8/2021',
+            Average: '411.52 ppm',
+            Interpolated: '415.1 ppm',
+            stdDev: '0.1',
+          },
+          {
+            key: '8',
+            DateLog: '1/9/2021',
+            Average: '411.51 ppm',
+            Interpolated: '414.92 ppm',
+            stdDev: '0.11',
+          }, 
+          {
+            key: '9',
+            DateLog: '1/10/2021',
+            Average: '413.11 ppm',
+            Interpolated: '415.14 ppm',
+            stdDev: '0.08',
+          },
+          {
+            key: '10',
+            DateLog: '1/11/2021',
+            Average: '414.25 ppm',
+            Interpolated: '414.99 ppm',
+            stdDev: '0.29',
+          },
+          {
+            key: '11',
+            DateLog: '1/12/2021',
+            Average: '415.52 ppm',
+            Interpolated: '415.25 ppm',
+            stdDev: '0.17',
+          }
         ],
         count: 2,
       };
@@ -281,19 +281,19 @@ const Tables = () => {
       this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
     };
 
-    handleAdd = () => {
-      const { count, dataSource } = this.state;
-      const newData: DataType = {
-        key: count,
-        CarbonEmission: `120`,
-        timestamp: '32',
+    // handleAdd = () => {
+    //   const { count, dataSource } = this.state;
+    //   const newData: DataType = {
+    //     key: count,
+    //     DataLog: `120`,
+    //     timestamp: '32',
         
-      };
-      this.setState({
-        dataSource: [...dataSource, newData],
-        count: count + 1,
-      });
-    };
+    //   };
+    //   this.setState({
+    //     dataSource: [...dataSource, newData],
+    //     count: count + 1,
+    //   });
+    // };
 
     handleSave = (row: DataType) => {
       const newData = [...this.state.dataSource];
@@ -331,9 +331,7 @@ const Tables = () => {
       });
       return (
         <div>
-          <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
-            Add a row
-        </Button>
+         
           <Table
             components={components}
             rowClassName={() => 'editable-row'}
@@ -353,21 +351,7 @@ const Tables = () => {
         <CCol>
           <CCard>
             <CCardHeader>
-              Create Table
-            </CCardHeader>
-            <CCardBody>
-              <DynamicFieldSet />  
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
-
-
-      <CRow>
-        <CCol>
-          <CCard>
-            <CCardHeader>
-              Data table
+              Forecast - Carbon Emission
             </CCardHeader>
             <CCardBody>
               <EditableTable/>

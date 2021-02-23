@@ -4,6 +4,8 @@ const Toaster = React.lazy(() => import('./views/notifications/toaster/Toaster')
 const Tables = React.lazy(() => import('./views/base/tables/Tables.tsx'));
 
 const Qualitative = React.lazy(() => import('./views/base/qualitative/Qualitative'));
+const Sample = React.lazy(() => import('./views/base/qualitative/sample.pdf'));
+
 
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/base/cards/Cards'));
@@ -48,13 +50,17 @@ const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
 
 // My code
-const Login = React.lazy(() => import('./views/pages/login/Login'))
+const Login = React.lazy(() => import('./views/pages/login/Login'));
+const Forecast = React.lazy(() => import('./views/forecasting/Forecast'));
+const InputLog = React.lazy(() => import('./views/logs/InputLog'));
 
 const routes = [
 //My code starts
   // { path: '/', name: 'Login', component: Login },
 //My code ends
   // { path: '/', exact: true, name: 'Home' },
+  { path: '/forecast', name: 'Forecast', component: Forecast },
+  { path: '/logs', name: 'Logs', component: InputLog },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
 
   { path: '/admin/dashboard', name: 'AdminDashboard', component: AdminDashboard },
@@ -83,6 +89,7 @@ const routes = [
   { path: '/base/progress-bar', name: 'Progress Bar', component: ProgressBar },
  
   { path: '/base/qualitative', name: 'Qualitative', component: Qualitative },
+  { path: '/base/sample', name: 'Sample', component: Sample },
  
   { path: '/base/switches', name: 'Switches', component: Switches },
   { path: '/base/tables', name: 'Tables', component: Tables },

@@ -14,7 +14,7 @@ import { Table, Input, Button, Popconfirm, Form } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 
-import './Table.css';
+import './InputLog.css';
 
 const Tables = () => {
     
@@ -25,97 +25,6 @@ const Tables = () => {
   const Demo = () => {
     const [cheader, setCheader] = useState<ColumnData[]>([{ value: 'CarbonEmission' }]);
   }
-  //Create Table Form
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 4 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 20 },
-    },
-  };
-  const formItemLayoutWithOutLabel = {
-    wrapperCol: {
-      xs: { span: 24, offset: 0 },
-      sm: { span: 20, offset: 4 },
-    },
-  };
-
-  const DynamicFieldSet = () => {
-    const onFinish = (values:any) => {
-      console.log('Received values of form:', values);
-    };
-
-    return (
-      <Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish}>
-        <Form.List
-          name="names"
-          rules={[
-            {
-              validator: async (_, names) => {
-                if (!names || names.length < 2) {
-                  return Promise.reject(new Error('At least 2 Column Header required'));
-                }
-              },
-            },
-          ]}
-        >
-          {(fields, { add, remove }, { errors }) => (
-            <>
-              {fields.map((field, index) => (
-                <Form.Item
-                  {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                  label={index === 0 ? 'Column Header' : ''}
-                  required={false}
-                  key={field.key}
-                >
-                  <Form.Item
-                    {...field}
-                    validateTrigger={['onChange', 'onBlur']}
-                    rules={[
-                      {
-                        required: true,
-                        whitespace: true,
-                        message: "Please input Column Header or delete this field.",
-                      },
-                    ]}
-                    noStyle
-                  >
-                    <Input placeholder="Column Header" style={{ width: '60%' }} />
-                  </Form.Item>
-                  {fields.length > 1 ? (
-                    <MinusCircleOutlined
-                      className="dynamic-delete-button"
-                      onClick={() => remove(field.name)}
-                    />
-                  ) : null}
-                </Form.Item>
-              ))}
-              <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  style={{ width: '60%' }}
-                  icon={<PlusOutlined />}
-                >
-                  Add Header
-              </Button>
-               
-                <Form.ErrorList errors={errors} />
-              </Form.Item>
-            </>
-          )}
-        </Form.List>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Create Table
-        </Button>
-        </Form.Item>
-      </Form>
-    );
-  };
 
 
   //Editable table
@@ -219,8 +128,10 @@ const Tables = () => {
 
   interface DataType {
     key: React.Key;
-    CarbonEmission: string;
+    DataLog: string;
+    Role: string;
     timestamp: string;
+
   }
 
   interface EditableTableState {
@@ -238,24 +149,18 @@ const Tables = () => {
 
       this.columns = [
         {
-          title: 'Carbon Emission',
-        dataIndex: 'CarbonEmission',
+          title: 'Data Log',
+        dataIndex: 'DataLog',
           width: '30%',
           editable: true,
         },
         {
-          title: 'Timestamp',
-      dataIndex: 'timestamp',
+          title: 'Role',
+      dataIndex: 'Role',
         },
         {
-          title: 'operation',
-          dataIndex: 'operation',
-          render: (_, record: { key: React.Key }) =>
-            this.state.dataSource.length >= 1 ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-                <Button type="link"><a>Delete</a></Button>
-              </Popconfirm>
-            ) : null,
+          title: 'Timestamp',
+          dataIndex: 'timestamp',
         },
       ];
 
@@ -263,13 +168,15 @@ const Tables = () => {
         dataSource: [
           {
             key: '0',
-            CarbonEmission: '120',
-            timestamp: '32',
+            DataLog: 'Create Carbon Emission Table',
+            Role: 'Admin',
+            timestamp: '19th Feb, 2020',
           },
           {
             key: '1',
-        CarbonEmission: '120',
-        timestamp: '32',
+            DataLog: 'Edited Carbon Emission Table',
+            Role: 'Admin',
+            timestamp: '19th Feb, 2020',
           },
         ],
         count: 2,
@@ -281,19 +188,6 @@ const Tables = () => {
       this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
     };
 
-    handleAdd = () => {
-      const { count, dataSource } = this.state;
-      const newData: DataType = {
-        key: count,
-        CarbonEmission: `120`,
-        timestamp: '32',
-        
-      };
-      this.setState({
-        dataSource: [...dataSource, newData],
-        count: count + 1,
-      });
-    };
 
     handleSave = (row: DataType) => {
       const newData = [...this.state.dataSource];
@@ -331,9 +225,6 @@ const Tables = () => {
       });
       return (
         <div>
-          <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
-            Add a row
-        </Button>
           <Table
             components={components}
             rowClassName={() => 'editable-row'}
@@ -353,21 +244,7 @@ const Tables = () => {
         <CCol>
           <CCard>
             <CCardHeader>
-              Create Table
-            </CCardHeader>
-            <CCardBody>
-              <DynamicFieldSet />  
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
-
-
-      <CRow>
-        <CCol>
-          <CCard>
-            <CCardHeader>
-              Data table
+              Input Logs
             </CCardHeader>
             <CCardBody>
               <EditableTable/>
