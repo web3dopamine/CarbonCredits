@@ -7,17 +7,51 @@ import {
   CCardHeader,
   CCol,
   CDataTable,
-  CRow
+  CRow,
+  CButton,
+  CButtonToolbar,
+  CModal,
+  CModalHeader,
+  CModalBody,
+  CModalFooter
 } from '@coreui/react'
-
-import { Table, Input, Button, Popconfirm, Form } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { FormInstance } from 'antd/lib/form';
 
 import './Table.css';
 
+import { Table, Input, Button, Popconfirm, Form, Select, Space } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { FormInstance } from 'antd/lib/form';
+const { Option } = Select;
+
+
+
 const Tables = () => {
-    
+
+  //modal code
+  const [modal, setModal] = useState(false);
+  const [TableModal, setTableModal] = useState(false);
+  const [showResults, setShowResults] = React.useState(false);
+
+
+  const toggle = () => {
+    setModal(!modal);
+
+  }
+  const toggleTableModal = () => {
+
+    setTableModal(!TableModal);
+
+  }
+
+  const showTable = () => {
+    // setTableModal(!TableModal);
+    setShowResults(true)
+
+  }
+
+  const refreshPage = () => {
+    window.location.reload();
+  }
 
    interface ColumnData {
       value?:any      
@@ -26,92 +60,103 @@ const Tables = () => {
     const [cheader, setCheader] = useState<ColumnData[]>([{ value: 'CarbonEmission' }]);
   }
   //Create Table Form
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 4 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 20 },
-    },
-  };
-  const formItemLayoutWithOutLabel = {
-    wrapperCol: {
-      xs: { span: 24, offset: 0 },
-      sm: { span: 20, offset: 4 },
-    },
-  };
 
-  const DynamicFieldSet = () => {
-    const onFinish = (values:any) => {
+  const areas = [
+    { label: '141310 - Carbon IOT', value: '141310 - Carbon IOT' },
+    { label: '(Sample) Data Collection Template_Occupational Health & Safety.xlsx', value: 'Health & Safety.xlsx' },
+    { label: 'Health & Safety.xlsx : Type of Suppliers', value: 'Health & Safety.xlsx' },
+    { label: 'Health & Safety.xlsx : Target for 2020 ', value: 'Health & Safety.xlsx' },
+    { label: 'Health & Safety.xlsx : 2020', value: 'Health & Safety.xlsx' },
+    { label: 'Health & Safety.xlsx : 2019', value: 'Health & Safety.xlsx' },
+    { label: 'Health & Safety.xlsx : 2018', value: 'Health & Safety.xlsx' },
+  ];
+
+  
+  const CreateTable = () => {
+    const [form] = Form.useForm();
+
+    const onFinish = values => {
       console.log('Received values of form:', values);
     };
 
+    const handleChange = () => {
+      form.setFieldsValue({ sights: [] });
+    };
+
     return (
-      <Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish}>
-        <Form.List
-          name="names"
-          rules={[
-            {
-              validator: async (_, names) => {
-                if (!names || names.length < 2) {
-                  return Promise.reject(new Error('At least 2 Column Header required'));
-                }
-              },
-            },
-          ]}
-        >
-          {(fields, { add, remove }, { errors }) => (
+      <Form form={form} name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off">
+       
+        <Form.List name="sights">
+          {(fields, { add, remove }) => (
             <>
-              {fields.map((field, index) => (
-                <Form.Item
-                  {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                  label={index === 0 ? 'Column Header' : ''}
-                  required={false}
-                  key={field.key}
-                >
+              {fields.map(field => (
+                <Space key={field.key} align="baseline">
                   <Form.Item
                     {...field}
-                    validateTrigger={['onChange', 'onBlur']}
-                    rules={[
-                      {
-                        required: true,
-                        whitespace: true,
-                        message: "Please input Column Header or delete this field.",
-                      },
-                    ]}
-                    noStyle
+                    label="Column Hearder"
+                    name={[field.name, 'price']}
+                    fieldKey={[field.fieldKey, 'price']}
+                    
                   >
-                    <Input placeholder="Column Header" style={{ width: '60%' }} />
+                    <Input />
                   </Form.Item>
-                  {fields.length > 1 ? (
-                    <MinusCircleOutlined
-                      className="dynamic-delete-button"
-                      onClick={() => remove(field.name)}
-                    />
-                  ) : null}
-                </Form.Item>
+                  <Form.Item
+                    noStyle
+                    shouldUpdate={(prevValues, curValues) =>
+                      prevValues.area !== curValues.area || prevValues.sights !== curValues.sights
+                    }
+                  >
+                    {() => (
+                      <Form.Item
+                        {...field}
+                        label="Value"
+                        name={[field.name, 'sight']}
+                        fieldKey={[field.fieldKey, 'sight']}
+                        
+                      >
+                        <Select style={{ width: 530 }} options={areas}>
+                          
+                           
+                          
+                        </Select>
+                      </Form.Item>
+                    )}
+                  </Form.Item>
+                 
+
+                  <MinusCircleOutlined onClick={() => remove(field.name)} />
+                </Space>
               ))}
+
               <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  style={{ width: '60%' }}
-                  icon={<PlusOutlined />}
-                >
+                <Button type="dashed" style={{ width: '25%', marginLeft:'150px' }} onClick={() => add()} block icon={<PlusOutlined />}>
                   Add Header
               </Button>
-               
-                <Form.ErrorList errors={errors} />
               </Form.Item>
             </>
           )}
         </Form.List>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Create Table
+          <Button type="primary" htmlType="submit" onClick={showTable}>
+            Submit
         </Button>
+
+          <CModal
+            show={TableModal}
+            onClose={toggleTableModal}
+          >
+            <CModalHeader closeButton>Table Creation</CModalHeader>
+            <CModalBody>
+              Are you sure you want to Create Table?
+        </CModalBody>
+            <CModalFooter>
+              <CButton color="primary" onClick={showTable}>Yes</CButton>{' '}
+              <CButton
+                color="secondary"
+                onClick={refreshPage}
+              >Cancel</CButton>
+            </CModalFooter>
+          </CModal>
         </Form.Item>
       </Form>
     );
@@ -238,7 +283,7 @@ const Tables = () => {
 
       this.columns = [
         {
-          title: 'Carbon Emission',
+          title: 'Carbon Emission (per day in tonnes)',
         dataIndex: 'CarbonEmission',
           width: '30%',
           editable: true,
@@ -263,16 +308,56 @@ const Tables = () => {
         dataSource: [
           {
             key: '0',
-            CarbonEmission: '120',
-            timestamp: '32',
+            CarbonEmission: '0.000321',
+            timestamp: '19th Feb, 2021 12:00:00',
           },
           {
             key: '1',
-        CarbonEmission: '120',
-        timestamp: '32',
+            CarbonEmission: '0.000317',
+            timestamp: '18th Feb, 2021 12:00:00',
+          },
+          {
+            key: '2',
+            CarbonEmission: '0.000314',
+            timestamp: '17th Feb, 2021 12:00:00',
+          },
+          {
+            key: '3',
+            CarbonEmission: '0.000322',
+            timestamp: '16th Feb, 2021 12:00:00',
+          },
+          {
+            key: '4',
+            CarbonEmission: '0.000324',
+            timestamp: '15th Feb, 2021 12:00:00',
+          },
+          {
+            key: '5',
+            CarbonEmission: '0.000314',
+            timestamp: '14th Feb, 2021 12:00:00',
+          },
+          {
+            key: '6',
+            CarbonEmission: '0.000317',
+            timestamp: '13th Feb, 2021 12:00:00',
+          },
+          {
+            key: '7',
+            CarbonEmission: '0.000317',
+            timestamp: '12th Feb, 2021 12:00:00',
+          },
+          {
+            key: '8',
+            CarbonEmission: '0.000319',
+            timestamp: '11th Feb, 2021 12:00:00',
+          },
+          {
+            key: '9',
+            CarbonEmission: '0.000321',
+            timestamp: '10th Feb, 2021 12:00:00',
           },
         ],
-        count: 2,
+        count: 10,
       };
     }
 
@@ -285,8 +370,8 @@ const Tables = () => {
       const { count, dataSource } = this.state;
       const newData: DataType = {
         key: count,
-        CarbonEmission: `120`,
-        timestamp: '32',
+        CarbonEmission: ``,
+        timestamp: '24th Feb, 2021 19:00:00',
         
       };
       this.setState({
@@ -356,18 +441,40 @@ const Tables = () => {
               Create Table
             </CCardHeader>
             <CCardBody>
-              <DynamicFieldSet />  
+              <CreateTable />  
             </CCardBody>
           </CCard>
         </CCol>
       </CRow>
 
-
+      {showResults ?
       <CRow>
         <CCol>
           <CCard>
             <CCardHeader>
               Data table
+              <CButtonToolbar justify="center">
+                <CButton color="warning" size="lg" onClick={toggle}>
+                    Hook to the dashboard
+                  </CButton>
+              </CButtonToolbar>  
+
+              <CModal
+                show={modal}
+                onClose={toggle}
+              >
+                <CModalHeader closeButton>Hook to dashboard</CModalHeader>
+                <CModalBody>
+                  Do you want to display this table on dashboard?
+        </CModalBody>
+                <CModalFooter>
+                    <a href="http://localhost:3000/#/dashboard" target="_blank"><CButton color="primary">Yes, Do it!</CButton>{' '}</a>
+                  <CButton
+                    color="secondary"
+                    onClick={toggle}
+                  >No!</CButton>
+                </CModalFooter>
+              </CModal>
             </CCardHeader>
             <CCardBody>
               <EditableTable/>
@@ -375,7 +482,7 @@ const Tables = () => {
           </CCard>
         </CCol>
       </CRow>
-     
+        : null}
     </>
   )
 }

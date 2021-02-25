@@ -1,29 +1,47 @@
 import React from 'react'
 import { CChartLine } from '@coreui/react-chartjs'
 import { getStyle, hexToRgba } from '@coreui/utils'
+import {
+  CBadge,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CCol,
+  CDataTable,
+  CRow,
+  CButton,
+  CButtonToolbar,
+  CModal,
+  CModalHeader,
+  CModalBody,
+  CModalFooter
+} from '@coreui/react'
 
 const brandSuccess = getStyle('success') || '#4dbd74'
 const brandInfo = getStyle('info') || '#20a8d8'
 const brandDanger = getStyle('danger') || '#f86c6b'
 
 const MainChartExample = attributes => {
+  
+
+
+  
   const random = (min, max)=>{
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
   const defaultDatasets = (()=>{
-    let elements = 27
-    const data1 = []
+    let elements = 10
+    const data1 = [321, 319, 317, 317, 314, 324, 322, 314, 317, 321]
     const data2 = []
     const data3 = []
     for (let i = 0; i <= elements; i++) {
-      data1.push(random(50, 200))
-      data2.push(random(80, 100))
-      data3.push(200)
+      data2.push(random(300, 400))
+      data3.push(420)
     }
     return [
       {
-        label: 'Carbon emmissions',
+        label: 'Carbon emmissions * 10^-6',
         backgroundColor: hexToRgba(brandInfo, 10),
         borderColor: brandInfo,
         pointHoverBackgroundColor: brandInfo,
@@ -31,7 +49,7 @@ const MainChartExample = attributes => {
         data: data1
       },
       {
-        label: 'Safe Level',
+        label: 'Safe Level * 10^-6',
         backgroundColor: 'transparent',
         borderColor: brandSuccess,
         pointHoverBackgroundColor: brandSuccess,
@@ -39,7 +57,7 @@ const MainChartExample = attributes => {
         data: data2
       },
       {
-        label: 'Max Carbon Limit',
+        label: 'Max Carbon Limit * 10^-6',
         backgroundColor: 'transparent',
         borderColor: brandDanger,
         pointHoverBackgroundColor: brandDanger,
@@ -66,12 +84,12 @@ const MainChartExample = attributes => {
             ticks: {
               beginAtZero: true,
               maxTicksLimit: 5,
-              stepSize: Math.ceil(250 / 5),
-              max: 250
+              stepSize: Math.ceil(500 / 5),
+              max: 500
             },
             gridLines: {
               display: true
-            }
+            },
           }]
         },
         elements: {
@@ -92,7 +110,7 @@ const MainChartExample = attributes => {
       {...attributes}
       datasets={defaultDatasets}
       options={defaultOptions}
-      labels={['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']}
+      labels={['10 Feb', '11 Feb', '12 Feb', '13 Feb', '14 Feb', '15 Feb', '16 Feb', '17 Feb', '18 Feb', '19 Feb']}
     />
   )
 }

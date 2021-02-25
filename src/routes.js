@@ -32,7 +32,7 @@ const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'));
 //const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'));
 //const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'));
 const Charts = React.lazy(() => import('./views/charts/Charts'));
-const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
+const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard.tsx'));
 
 
 const AdminDashboard = React.lazy(() => import('./views/dashboard/AdminDashboard'));
@@ -73,7 +73,7 @@ const routes = [
   { path: '/base/cards', name: 'Cards', component: Cards },
   { path: '/base/carousels', name: 'Carousel', component: Carousels },
   { path: '/base/collapses', name: 'Collapse', component: Collapses },
-  { path: '/base/forms', name: 'Forms', component: BasicForms },
+  { path: '/base/forms', name: 'Source', component: BasicForms },
 
   { path: '/base/exchange', name: 'Forms', component: Exchange },
   { path: '/base/inputs', name: 'Forms', component: BasicForms },

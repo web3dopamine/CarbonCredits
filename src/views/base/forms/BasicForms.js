@@ -29,13 +29,91 @@ import {
   CLabel,
   CSelect,
   CRow,
-  CSwitch
+  CSwitch,
+  CModal,
+  CModalHeader,
+  CModalBody,
+  CModalFooter,
+
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+
+import { Table, Tag, Space } from 'antd';
+
 
 const BasicForms = () => {
   const [collapsed, setCollapsed] = React.useState(true)
   const [showElements, setShowElements] = React.useState(true)
+
+  //modal code
+  const [modal, setModal] = React.useState(false);
+
+  const toggle = () => {
+    setModal(!modal);
+  }
+  const refreshPage = () => {
+    window.location.reload();
+  }
+
+//input Table
+
+  const columns = [
+    {
+      title: 'Data Source',
+      dataIndex: 'dataSource',
+      key: 'dataSource',
+      render: text => <a>{text}</a>,
+    },
+    {
+      title: 'Timestamp',
+      dataIndex: 'timestamp',
+      key: 'timestamp',
+    },
+    {
+      title: 'Tags',
+      key: 'tags',
+      dataIndex: 'tags',
+      render: tags => (
+        <>
+          {tags.map(tag => {
+            let color = tag.length > 5 ? 'geekblue' : 'green';
+            if (tag == 'NOT CONNECTED') {
+              color = 'volcano';
+            }
+            return (
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (text, record) => (
+        <Space size="middle">
+          <CButton type="reset" size="sm" color="danger">Delete</CButton>
+        </Space>
+      ),
+    },
+  ];
+
+  const data = [
+    {
+      key: '1',
+      dataSource: '141310 - Carbon IOT',
+      timestamp: '10th Feb, 2021',
+      tags: ['connected', 'stable'],
+    },
+    {
+      key: '2',
+      dataSource: 'Health & Safety.xlsx',
+      timestamp: '8th Feb, 2021',
+      tags: ['NOT CONNECTED'],
+    }
+  ];
 
   return (
     <>
@@ -55,7 +133,7 @@ const BasicForms = () => {
                     <CLabel htmlFor="text-input">IOT device</CLabel>
                   </CCol>
                   <CCol xs="12" md="9">
-                    <CInput id="text-input" name="text-input" placeholder="Addresss" />
+                    <CInput id="text-input" name="text-input" placeholder="Addresss:PORT" />
                     <CFormText>Enter IP address of IOT device </CFormText>
                   </CCol>
                 </CFormGroup>
@@ -94,8 +172,26 @@ const BasicForms = () => {
               </CForm>
             </CCardBody>
             <CCardFooter>
-              <CButton type="submit" size="sm" color="primary"><CIcon name="cil-scrubber" /> Submit</CButton>
+              <CButton type="submit" size="sm" color="primary" onClick={toggle}><CIcon name="cil-scrubber" /> Connect</CButton>&nbsp;&nbsp;
               <CButton type="reset" size="sm" color="danger"><CIcon name="cil-ban" /> Reset</CButton>
+
+
+              <CModal
+                show={modal}
+                onClose={toggle}
+              >
+                <CModalHeader closeButton>IOT device / file upload</CModalHeader>
+                <CModalBody>
+                  Are you sure you want to perform this action?
+        </CModalBody>
+                <CModalFooter>
+                  <CButton color="primary" onClick={refreshPage}>Yes</CButton>{' '}
+                  <CButton
+                    color="secondary"
+                    onClick={toggle}
+                  >Cancel</CButton>
+                </CModalFooter>
+              </CModal>
             </CCardFooter>
           </CCard>
 
@@ -103,7 +199,21 @@ const BasicForms = () => {
 
       </CRow>
 
+      <CRow>
+        <CCol>
+          <CCard>
+            <CCardHeader>
+              Create Table
+            </CCardHeader>
+            <CCardBody>
+              <Table columns={columns} dataSource={data} />
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
 
+
+      
     </>
   )
 }
